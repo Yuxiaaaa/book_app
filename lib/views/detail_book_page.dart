@@ -1,5 +1,8 @@
 import 'dart:convert';
+//import 'dart:html';
 
+import 'package:url_launcher/link.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:book_app/model/book_detail_response.dart';
 import 'package:book_app/model/book_list_response.dart';
 import 'package:flutter/material.dart';
@@ -142,7 +145,16 @@ class _DetailBookPageState extends State<DetailBookPage> {
                           style: ElevatedButton.styleFrom(
                               //fixedSize: Size(double.infinity, 50)
                               ),
-                          onPressed: () {},
+                          onPressed: () {
+                            //print(Url);
+                            Uri uri = Uri.parse(detailBook!.url!);
+                            try {
+                              canLaunchUrl(uri);
+                            } catch (e) {
+                              print("error");
+                              print(e);
+                            }
+                          },
                           child: Text("Buy")),
                     ),
                     SizedBox(
