@@ -1,17 +1,7 @@
-import 'dart:convert';
-//import 'dart:html';
-
 import 'package:book_app/controller/book_controller.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/link.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:book_app/model/book_detail_response.dart';
-import 'package:book_app/model/book_list_response.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:http/http.dart' as http;
-
 import 'image_view_screen.dart';
 
 class DetailBookPage extends StatefulWidget {
@@ -27,7 +17,6 @@ class _DetailBookPageState extends State<DetailBookPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     controller = Provider.of<BookController>(context, listen: false);
     controller!.fetchDetailBookApi(widget.isbn);
@@ -37,11 +26,11 @@ class _DetailBookPageState extends State<DetailBookPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(" Detail"),
+          title: const Text(" Detail"),
         ),
         body: Consumer<BookController>(builder: (context, controller, child) {
           return controller.detailBook == null
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : Padding(
                   padding: const EdgeInsets.all(2.0),
                   child: Column(
@@ -71,16 +60,16 @@ class _DetailBookPageState extends State<DetailBookPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(controller.detailBook!.title!,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 15,
                                         fontWeight: FontWeight.bold,
                                       )),
                                   Text(
                                     controller.detailBook!.authors!,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 10, color: Colors.grey),
                                   ),
-                                  SizedBox(height: 10),
+                                  const SizedBox(height: 10),
                                   Row(
                                     children: List.generate(
                                         5,
@@ -92,13 +81,13 @@ class _DetailBookPageState extends State<DetailBookPage> {
                                                 : Colors.grey)),
                                   ),
                                   Text(controller.detailBook!.subtitle!,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 10,
                                         color: Colors.grey,
                                         fontWeight: FontWeight.bold,
                                       )),
                                   Text(controller.detailBook!.price!,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         color: Colors.green,
                                         fontWeight: FontWeight.bold,
@@ -109,10 +98,10 @@ class _DetailBookPageState extends State<DetailBookPage> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 1,
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -124,19 +113,18 @@ class _DetailBookPageState extends State<DetailBookPage> {
                               try {
                                 (await canLaunchUrl(uri))
                                     ? launchUrl(uri)
-                                    : print("Tidak Berhasil Navigasi");
+                                    : debugPrint("Tidak Berhasil Navigasi");
                               } catch (e) {
-                                print("error");
-                                print(e);
+                                debugPrint("error");
                               }
                             },
-                            child: Text("Buy")),
+                            child: const Text("Buy")),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(controller.detailBook!.desc!),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       //OutlinedButton(onPressed: onPressed, child: child),
                       //TextButton(onPressed: onPressed, child: child),
                       Column(
@@ -152,10 +140,10 @@ class _DetailBookPageState extends State<DetailBookPage> {
                           //Text(detailBook!.rating!),
                         ],
                       ),
-                      Divider(),
+                      const Divider(),
                       controller.similiarBook == null
-                          ? CircularProgressIndicator()
-                          : Container(
+                          ? const CircularProgressIndicator()
+                          : SizedBox(
                               height: 150,
                               child: ListView.builder(
                                 //shrinkWrap: true,
@@ -166,7 +154,7 @@ class _DetailBookPageState extends State<DetailBookPage> {
                                 itemBuilder: (context, index) {
                                   final current =
                                       controller.similiarBook!.books![index];
-                                  return Container(
+                                  return SizedBox(
                                     width: 100,
                                     child: Column(
                                       children: [
@@ -179,7 +167,7 @@ class _DetailBookPageState extends State<DetailBookPage> {
                                           maxLines: 2,
                                           textAlign: TextAlign.center,
                                           overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                           ),
                                         )
